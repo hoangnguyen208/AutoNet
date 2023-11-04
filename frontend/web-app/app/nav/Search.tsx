@@ -1,18 +1,18 @@
 'use client'
 import { useParamsStore } from '@/hooks/useParamsStore'
-import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 
 export default function Search() {
     const setParams = useParamsStore(state => state.setParams);
-    const [value, setValue] = useState('');
+    const setSearchValue = useParamsStore(state => state.setSearchValue);
+    const searchValue = useParamsStore(state => state.searchValue);
 
     function onChange(event: any) {
-        setValue(event.target.value);
+        setSearchValue(event.target.value);
     }
 
     function search() {
-        setParams({ searchTerm: value });
+        setParams({ searchTerm: searchValue });
     }
 
     return (
@@ -25,6 +25,7 @@ export default function Search() {
                 onKeyDown={(e: any) => {
                     if (e.key === 'Enter') search();
                 }}
+                value={searchValue}
             />
             <button onClick={search}>
                 <FaSearch size={34} className='bg-red-400 text-white rounded-full p-2 cursor-pointer mx-2' />
