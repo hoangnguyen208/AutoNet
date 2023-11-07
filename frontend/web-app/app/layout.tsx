@@ -1,6 +1,7 @@
 import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
 import './globals.css'
 import Navbar from './nav/Navbar'
+import ToasterProvider from './providers/ToasterProvider'
 
 export const metadata: Metadata = {
   title: 'AutoNet',
@@ -15,6 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ToasterProvider />
         <Navbar />
         <main className='container mx-auto px-5 pt-10'>
           {children}
