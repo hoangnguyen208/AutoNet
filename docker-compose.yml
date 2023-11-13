@@ -86,8 +86,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
       - ConnectionStrings__DefaultConnection=Server=postgres:5432;User Id=postgres;Password=postgrespw;Database=identity
-    ports:
-      - 80:80
+      - VIRTUAL_HOST=id.autonet.com
+      - ClientApp=http://app.autonet.com
     depends_on:
       - postgres
     networks:
@@ -101,8 +101,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
       - ASPNETCORE_URLS=http://+:80
-    ports:
-      - 6001:80
+      - VIRTUAL_HOST=api.autonet.com
+      - ClientApp=http://app.autonet.come
     networks:
       custom:
   bid-svc:
@@ -146,19 +146,27 @@ services:
       dockerfile: frontend/web-app/Dockerfile
     volumes:
       - /var/lib/web/data
-    ports:
-      - 3000:3000
     extra_hosts:
       - id.autonet.com:10.5.0.200
     environment:
       - NEXTAUTH_SECRET=secretstring
-      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_URL=http://app.autonet.com
       - NEXTAUTH_URL_INTERNAL=http://web-app:3000
       - API_URL=http://gateway-svc/
       - ID_URL=http://id.autonet.com
       - NEXT_PUBLIC_NOTIFY_URL=http://gateway-svc/notifications
+      - VIRTUAL_HOST=app.autonet.com
+      - VIRTUAL_PORT=3000
     networks:
       custom:
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - 80:80
+    networks:
+      custom:
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
 
 # volumes:
 #   pgdata:
