@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
+using WebMotions.Fake.Authentication.JwtBearer;
 
 namespace AuctionService.IntegrationTests;
 public class CustomWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
-    private PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder().Build();
+    private readonly PostgreSqlContainer _postgreSqlContainer = new PostgreSqlBuilder().Build();
 
     public async Task InitializeAsync()
     {
@@ -30,6 +31,11 @@ public class CustomWebAppFactory : WebApplicationFactory<Program>, IAsyncLifetim
 
             services.AddMassTransitTestHarness();
             services.EnsureCreated<AuctionDbContext>();
+            services.AddAuthentication(FakeJwtBearerDefaults.AuthenticationScheme)
+                .AddFakeJwtBearer(opt =>
+                {
+                    opt.BearerValueType = FakeJwtBearerBearerValueType.Jwt;
+                });
         });
     }
 
