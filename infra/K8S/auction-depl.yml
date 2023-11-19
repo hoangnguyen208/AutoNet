@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: auction-svc
-        image: maestro021/auction-svc
+        image: maestro021/autonet-auction-svc
         imagePullPolicy: Never
         env:
           - name: RabbitMq__Host
@@ -41,6 +41,7 @@ kind: Service
 metadata:
   name: auction-clusterip
 spec:
+  type: ClusterIP
   selector:
     app: auction-svc
   ports:
