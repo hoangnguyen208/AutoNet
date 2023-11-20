@@ -3,7 +3,7 @@
 import { useAuctionStore } from '@/hooks/useAuctionStore';
 import { useBidStore } from '@/hooks/useBidStore';
 import { Auction, AuctionFinished, Bid } from '@/types';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
+import signalR, { HubConnection, HubConnectionBuilder } from '@microsoft/signalr'
 import { User } from 'next-auth';
 import React, { ReactNode, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
@@ -24,7 +24,9 @@ export default function SignalRProvider({ children, user }: Props) {
 
     useEffect(() => {
         const newConnection = new HubConnectionBuilder()
-            .withUrl(apiUrl!)
+            .withUrl(apiUrl!, {
+                skipNegotiation: true
+            })
             .withAutomaticReconnect()
             .build();
         setConnection(newConnection);

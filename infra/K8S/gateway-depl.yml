@@ -18,6 +18,8 @@ spec:
         env:
           - name: ClientApp
             value: https://app.autonet.com
+          - name: IdentityServiceUrl
+            value: https://id.torohng.net
 
 ---
 apiVersion: v1
