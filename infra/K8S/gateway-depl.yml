@@ -14,7 +14,7 @@ spec:
       containers:
       - name: gateway-svc
         image: maestro021/autonet-gateway-svc
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         env:
           - name: ClientApp
             value: https://app.autonet.com

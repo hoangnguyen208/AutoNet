@@ -24,4 +24,4 @@ jobs:
         context: .
         file: src/IdentityService/Dockerfile
         push: true
-        tags: maestro021/identity-svc:latest
+        tags: maestro021/autonet-identity-svc:latest
