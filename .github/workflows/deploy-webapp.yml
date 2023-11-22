@@ -9,7 +9,7 @@ on:
 
 env:
   REGISTRY_IMAGE: maestro021/autonet-web-app
-  DOCKERFILE: fontend/web-app/Dockerfile
+  DOCKERFILE: frontend/web-app/Dockerfile
   DEPLOYMENT_NAME: webapp
 
 jobs:
